@@ -37,7 +37,9 @@ pipeline {
     post {
         always {
             // Archive JTL and HTML reports
-            archiveArtifacts artifacts: 'target/jmeter/**/*', fingerprint: true
+            //archiveArtifacts artifacts: 'target/jmeter/**/*', fingerprint: true
+            archiveArtifacts artifacts: 'target/jmeter/results/**/*', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'target/jmeter/results/**/*', allowEmptyArchive: true
             
             // Publish HTML reports
             publishHTML(target: [
