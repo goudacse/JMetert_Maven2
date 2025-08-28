@@ -11,6 +11,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jmeter.maven.plugin.version>3.7.0</jmeter.maven.plugin.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <build>
@@ -46,6 +48,22 @@
                     <reportDirectory>${project.build.directory}/jmeter/reports</reportDirectory>
                     <ignoreResultFailures>true</ignoreResultFailures>
                     <generateReports>true</generateReports>
+                    <jmeterExtensions>
+                        <artifact>kg.apc:jmeter-plugins-standard:2.0</artifact>
+                    </jmeterExtensions>
+                    <propertiesJMeter>
+                        <jmeter.save.saveservice.output_format>xml</jmeter.save.saveservice.output_format>
+                        <jmeter.save.saveservice.response_data>false</jmeter.save.saveservice.response_data>
+                        <jmeter.save.saveservice.samplerData>false</jmeter.save.saveservice.samplerData>
+                        <jmeter.save.saveservice.requestHeaders>false</jmeter.save.saveservice.requestHeaders>
+                        <jmeter.save.saveservice.url>true</jmeter.save.saveservice.url>
+                        <jmeter.save.saveservice.responseHeaders>false</jmeter.save.saveservice.responseHeaders>
+                        <jmeter.save.saveservice.time>true</jmeter.save.saveservice.time>
+                        <jmeter.save.saveservice.timestamp>true</jmeter.save.saveservice.timestamp>
+                        <jmeter.save.saveservice.latency>true</jmeter.save.saveservice.latency>
+                        <jmeter.save.saveservice.label>true</jmeter.save.saveservice.label>
+                        <jmeter.save.saveservice.assertion_results_failure_message>true</jmeter.save.saveservice.assertion_results_failure_message>
+                    </propertiesJMeter>
                 </configuration>
             </plugin>
         </plugins>
@@ -131,5 +149,52 @@
                 </plugins>
             </build>
         </profile>
+        
+        <!-- Profile for parallel execution -->
+        <profile>
+            <id>parallel</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>run-parallel-tests</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>cmd</executable>
+                                    <arguments>
+                                        <argument>/c</argument>
+                                        <argument>${project.basedir}/run-parallel.bat</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
+    
+    <dependencies>
+        <!-- No specific dependencies needed for JMeter tests -->
+    </dependencies>
+    
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>jmeter-plugins</id>
+            <name>JMeter Plugins Repository</name>
+            <url>https://jmeter-plugins.org/repo/</url>
+        </repository>
+    </repositories>
 </project>
