@@ -1,0 +1,16 @@
+<project name="JMeterTests" default="run-all" basedir=".">
+
+    <property name="report.dir" value="jmeter-report"/>
+
+    <target name="init">
+        <mkdir dir="${report.dir}"/>
+    </target>
+
+    <target name="run-all" depends="init">
+        <echo message="Running all JMeter tests via batch script..."/>
+        <exec executable="cmd">
+            <arg line="/c run-jmeter-parallel.bat"/>
+        </exec>
+    </target>
+
+</project>
