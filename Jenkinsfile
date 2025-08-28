@@ -157,7 +157,7 @@ timeout /t 3600
             perfReport(
                 sourceDataFiles: 'target/jmeter/results/**/*.jtl',
                 errorFailedThreshold: env.ERROR_THRESHOLD,
-                errorUnstableThreshold: '1',
+                errorUnstableThreshold: 1,
                 errorUnstableResponseTimeThreshold: env.RESPONSE_TIME_THRESHOLD,
                 relativeFailedThresholdPositive: '0',
                 relativeFailedThresholdNegative: '0',
