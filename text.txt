@@ -1,0 +1,5 @@
+all-tests
+end-to-end
+add-products
+add-pet
+add-user
