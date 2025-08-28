@@ -51,7 +51,7 @@ pipeline {
             
             // Performance Plugin integration
             //perfReport sourceDataFiles: 'target/jmeter/results/**/*.jtl'
-            perfReport sourceDataFiles: 'target/jmeter/results/*.jtl'
+            //perfReport sourceDataFiles: 'target/jmeter/results/*.jtl'
         }
     }
 }
