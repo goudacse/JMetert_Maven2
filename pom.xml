@@ -42,40 +42,23 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- Use JMX files from your repository -->
                     <testFilesDirectory>${project.basedir}/Test Plans</testFilesDirectory>
                     <resultsDirectory>${project.build.directory}/jmeter/results</resultsDirectory>
                     <reportDirectory>${project.build.directory}/jmeter/reports</reportDirectory>
                     <ignoreResultFailures>true</ignoreResultFailures>
                     <generateReports>true</generateReports>
-                    <propertiesJMeter>
-                        <jmeter.save.saveservice.output_format>xml</jmeter.save.saveservice.output_format>
-                        <jmeter.save.saveservice.response_data>false</jmeter.save.saveservice.response_data>
-                        <jmeter.save.saveservice.samplerData>false</jmeter.save.saveservice.samplerData>
-                        <jmeter.save.saveservice.requestHeaders>false</jmeter.save.saveservice.requestHeaders>
-                        <jmeter.save.saveservice.url>true</jmeter.save.saveservice.url>
-                        <jmeter.save.saveservice.responseHeaders>false</jmeter.save.saveservice.responseHeaders>
-                        <jmeter.save.saveservice.time>true</jmeter.save.saveservice.time>
-                        <jmeter.save.saveservice.timestamp>true</jmeter.save.saveservice.timestamp>
-                        <jmeter.save.saveservice.latency>true</jmeter.save.saveservice.latency>
-                        <jmeter.save.saveservice.label>true</jmeter.save.saveservice.label>
-                        <jmeter.save.saveservice.assertion_results_failure_message>true</jmeter.save.saveservice.assertion_results_failure_message>
-                    </propertiesJMeter>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    
+
     <profiles>
-        <!-- Profile for running all tests -->
         <profile>
             <id>all-tests</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-        
-        <!-- Profile for running End-to-End Flow test only -->
         <profile>
             <id>end-to-end</id>
             <build>
@@ -92,8 +75,6 @@
                 </plugins>
             </build>
         </profile>
-        
-        <!-- Profile for running Add Products test only -->
         <profile>
             <id>add-products</id>
             <build>
@@ -110,8 +91,6 @@
                 </plugins>
             </build>
         </profile>
-        
-        <!-- Profile for running Add Pet test only -->
         <profile>
             <id>add-pet</id>
             <build>
@@ -128,8 +107,6 @@
                 </plugins>
             </build>
         </profile>
-        
-        <!-- Profile for running Add User test only -->
         <profile>
             <id>add-user</id>
             <build>
@@ -146,8 +123,6 @@
                 </plugins>
             </build>
         </profile>
-        
-        <!-- Profile for parallel execution -->
         <profile>
             <id>parallel</id>
             <build>
@@ -177,40 +152,12 @@
             </build>
         </profile>
     </profiles>
-    
-    <dependencies>
-        <!-- JMeter standard plugins -->
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-standard</artifactId>
-            <version>2.0</version>
-        </dependency>
 
-        <!-- JMeter extras (graphs, listeners, etc.) -->
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-extras</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-
-        <!-- JMeter extras-libs (optional, more listeners/visualizers) -->
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-extras-libs</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-    </dependencies>
-    
     <repositories>
         <repository>
             <id>central</id>
             <name>Maven Central</name>
             <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-        <repository>
-            <id>jmeter-plugins-repo</id>
-            <name>JMeter Plugins Repository</name>
-            <url>https://jmeter-plugins.org/maven/</url>
         </repository>
     </repositories>
 </project>
