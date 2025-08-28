@@ -11,16 +11,6 @@
             choices: ['all-tests', 'parallel', 'end-to-end', 'add-products', 'add-pet', 'add-user'],
             description: 'Select which test profile to run'
         )
-        string(
-            name: 'TEST_DURATION',
-            defaultValue: '300',
-            description: 'Test duration in seconds (if supported by JMX)'
-        )
-        booleanParam(
-            name: 'SKIP_REPORT',
-            defaultValue: false,
-            description: 'Skip generating HTML reports (faster)'
-        )
     }
     
     environment {
@@ -153,23 +143,6 @@ timeout /t 3600
                 }
             }
             
-            // Performance Plugin integration - parse JTL files
-            perfReport(
-                sourceDataFiles: 'target/jmeter/results/**/*.jtl',
-                errorFailedThreshold: env.ERROR_THRESHOLD,
-                errorUnstableThreshold: 1,
-                errorUnstableResponseTimeThreshold: env.RESPONSE_TIME_THRESHOLD,
-                relativeFailedThresholdPositive: '0',
-                relativeFailedThresholdNegative: '0',
-                relativeUnstableThresholdPositive: '0',
-                relativeUnstableThresholdNegative: '0',
-                modePerformancePerTestCase: true,
-                modeThroughput: true,
-                modeEvaluation: true,
-                ignoreFailedBuilds: true,
-                ignoreUnstableBuilds: true,
-                persistConstraintLog: true
-            )
             
             // Clean workspace to save disk space (optional)
             // cleanWs(patterns: [[pattern: 'target/jmeter/bin/**', type: 'EXCLUDE']])
