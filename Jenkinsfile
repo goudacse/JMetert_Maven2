@@ -1,15 +1,25 @@
 pipeline {
     agent any
+
     tools {
-        maven 'Maven 3.9.11'   // Must match the name in Jenkins config
+        maven 'Maven 3.9.11'   // Must match Jenkins Global Tool Configuration
     }
 
     stages {
-        stage('Build & Run JMeter Tests') {
+        stage('Clean & Build') {
             steps {
                 script {
-                    // Run Maven tests (executes jmeter-maven-plugin)
-                    bat "mvn clean verify -U"
+                    // Clean and prepare build
+                    bat "mvn clean install -U -DskipTests"
+                }
+            }
+        }
+
+        stage('Run Parallel JMeter Tests') {
+            steps {
+                script {
+                    // Activate the 'parallel' profile, which runs run-parallel.bat via exec-maven-plugin
+                    bat "mvn verify -Pparallel -U"
                 }
             }
         }
@@ -17,15 +27,15 @@ pipeline {
         stage('Archive Results') {
             steps {
                 script {
-                    // Archive JMeter results (.jtl and HTML report)
-                    archiveArtifacts artifacts: 'target/jmeter/results/*.jtl', allowEmptyArchive: true
+                    // Archive JMeter results (.jtl files) and HTML reports
+                    archiveArtifacts artifacts: 'target/jmeter/results/**/*.jtl', allowEmptyArchive: true
                     publishHTML(target: [
                         allowMissing: true,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
                         reportDir: 'target/jmeter/reports',
                         reportFiles: 'index.html',
-                        reportName: 'JMeter HTML Report'
+                        reportName: 'JMeter Parallel HTML Report'
                     ])
                 }
             }
@@ -34,7 +44,10 @@ pipeline {
 
     post {
         always {
-            echo "Collecting test artifacts and reports..."
+            script {
+                echo "Cleaning up workspace after build..."
+                cleanWs()
+            }
         }
     }
 }
